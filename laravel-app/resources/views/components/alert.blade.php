@@ -1,4 +1,4 @@
-@props(['type','nom'])
+@props(['type'])
 <div class="alert alert-{{$type}}" role="alert">
-    {{$slot}} {{$nom}}
+    {{$slot}}
 </div>

@@ -1,7 +1,4 @@
 <x-master title="Page d'acceuill">
-    @section('title')
-    Acceuil
-    @endsection
     <x-alert type='warning' nom='ahmed'>
         <strong>salam 3alaykom</strong>
     </x-alert>
