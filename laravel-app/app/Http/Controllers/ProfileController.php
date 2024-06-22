@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\profileRequest;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,8 +19,6 @@ class ProfileController extends Controller
     //show profile par id
     public function show(Profile $profile)
     {
-        // $id = (int)$Request->id;
-        // $profile = Profile::findOrfail($id);
         return view('profile.show', compact('profile'));
     }
 
@@ -28,26 +27,45 @@ class ProfileController extends Controller
     {
         return view('profile.create');
     }
-    public function store(Request $request)
+    //store methode  profile
+    public function store(profileRequest $request)
     {
-        $name = $request->name;
-        $email = $request->email;
-        $password = $request->password;
-        $bio = $request->bio;
+        // $name = $request->name;
+        // $email = $request->email;
+        // $password = $request->password;
+        // $bio = $request->bio;
+        // $image = $request->image;
 
         //Validation des fields
-        $formfields = $request->validate([
-            'name' => 'required|min:3|max:25',
-            'email' => 'required|email|unique:profiles',
-            'password' => 'required|min:4|max:25|confirmed',
-            'bio' => 'required',
-        ]);
-
+        $formfields = $request->validated();
+        ////////make the image in file public
+        $formfields['image'] = $request->file('image')->store('profile','public');
         //Hash de mot de passe
         $formfields['password'] = Hash::make($request->password);
 
         //insertion au database using profile model
         Profile::create($formfields);
-        return redirect()->route('profiles.index')->with('success','Votre profile est bien créer');
+        return redirect()->route('profiles.index')->with('success', 'Votre profile est bien créer');
     }
+    //delete profile par id
+    public function destroy(Profile $profile)
+    {
+        $profile->delete();
+        return to_route('profiles.index')->with('success', 'Profile deleted successfully');
+    }
+
+    //edit  profile
+    public function edit(Profile $profile)
+    {
+        return view('profile.edit',compact('profile'));
+    }
+
+    //update  profile
+    public function update(profileRequest $request,Profile $profile)
+    {
+        $formfields = $request->validated();
+        $profile->fill($formfields)->save();
+        return to_route('profiles.show',$profile->id)->with('success', 'Profile updated successfully');
+    }
+
 }

@@ -9,9 +9,9 @@ class profileRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,10 +22,11 @@ class profileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'name' => 'required|min:3|max:25',
-            // 'email' => 'required|email|unique:profiles',
-            // 'password' => 'required|min:4|max:25|confirmed',
-            // 'bio' => 'required',
+            'name' => 'required|min:3|max:25',
+            'email' => 'required|email',
+            'password' => 'required|min:4|max:25|confirmed',
+            'bio' => 'required',
+            'image' => 'required|image|mimes:png,jpg,jpeg,svg|max:10240',
         ];
     }
 }

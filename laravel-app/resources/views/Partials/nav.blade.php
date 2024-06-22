@@ -14,11 +14,6 @@
                     <a class="nav-link" href={{ route('show.login') }}>Se connecter</a>
                 </li>
             @endguest
-            @auth
-                <li class="nav-item">
-                    <a class="nav-link" href={{ route('login.logout') }}>Se déconnecter</a>
-                </li>
-            @endauth
             <li class="nav-item">
                 <a class="nav-link" href={{ route('profiles.index') }}>Tout les Profile</a>
             </li>
@@ -32,16 +27,17 @@
                 <a class="nav-link" href={{ route('profiles.create') }}>Ajouter Profile</a>
             </li>
         </ul>
+        @auth
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Username
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                {{auth()->user()->email}}
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="{{route('login.logout')}}">Deconnexion</a></li>
+            </ul>
         </div>
+        @endauth
     </div>
 </nav>

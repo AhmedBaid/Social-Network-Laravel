@@ -1,14 +1,5 @@
 <x-master title="Page d'acceuill">
-    <x-alert type='warning' nom='ahmed'>
-        <strong>salam 3alaykom</strong>
-    </x-alert>
-    <x-alert type='danger' nom='jamaa'>
-        <strong>salam 3alaykom</strong>
-    </x-alert>
-    <x-alert type='info' nom='3adel'>
-        <strong>salam 3alaykom</strong>
-    </x-alert>
-    <x-users-table :users=$users />
+    <h2>Home</h2>
 </x-master>
 
 
