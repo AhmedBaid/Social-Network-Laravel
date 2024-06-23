@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('auth')->except(['show']);
+        // $this->middleware('auth')->only(['show']);
+    }
     //show all profile
     public function index()
     {
@@ -39,7 +44,9 @@ class ProfileController extends Controller
         //Validation des fields
         $formfields = $request->validated();
         ////////make the image in file public
-        $formfields['image'] = $request->file('image')->store('profile','public');
+        if ($request->hasFile('image')) {
+            $formfields['image'] = $request->file('image')->store('profile', 'public');
+        }
         //Hash de mot de passe
         $formfields['password'] = Hash::make($request->password);
 
@@ -57,15 +64,20 @@ class ProfileController extends Controller
     //edit  profile
     public function edit(Profile $profile)
     {
-        return view('profile.edit',compact('profile'));
+        return view('profile.edit', compact('profile'));
     }
 
     //update  profile
-    public function update(profileRequest $request,Profile $profile)
+    public function update(profileRequest $request, Profile $profile)
     {
         $formfields = $request->validated();
+        ////////make the image in file public
+        if ($request->hasFile('image')) {
+            $formfields['image'] = $request->file('image')->store('profile', 'public');
+        }
+        //Hash de mot de passe
+        $formfields['password'] = Hash::make($request->password);
         $profile->fill($formfields)->save();
-        return to_route('profiles.show',$profile->id)->with('success', 'Profile updated successfully');
+        return to_route('profiles.show', $profile->id)->with('success', 'Profile updated successfully');
     }
-
 }

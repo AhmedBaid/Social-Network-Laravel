@@ -6,11 +6,17 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+///////////////un controlleur ressource kayn fih kolxi//////////////////////////////
+// Route::resources('profiles',ProfileController::class);
+
+// Routes for homepge
 Route::get('/', [homecontroller::class, 'index'])->name('homepage.index');
 
 // Routes for login and logout
-Route::get('/login', [LoginController::class, 'show'])->name('show.login');
-Route::post('/login', [LoginController::class, 'index'])->name('login');
+Route::middleware('guest')->group(function (){
+    Route::get('/login', [LoginController::class, 'show'])->name('show.login')->middleware('guest');
+    Route::post('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+});
 Route::get('/logout', [LoginController::class, 'logout'])->name('login.logout');
 
 // Routes for profile
@@ -24,6 +30,10 @@ Route::put('/Profiles/{profile}', [ProfileController::class, 'update'])->name('p
 
 // Routes for information
 Route::get('/settings', [InformationController::class, 'index'])->name('settings.index');
+//////////route to some url doesnt exist in app
+Route::get('/google',function(){
+    return redirect()->away('https://www.google.com');
+});
 
 
 

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light m ">
     <a class="navbar-brand" href="/">Social network</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
         aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,6 @@
                 {{auth()->user()->email}}
             </button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
                 <li><a class="dropdown-item" href="{{route('login.logout')}}">Deconnexion</a></li>
             </ul>
         </div>
